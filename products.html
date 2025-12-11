@@ -39,7 +39,101 @@
                     </div>
                 </div>
                 <div class="products-grid" id="products-grid">
-                    <!-- Products will be loaded here -->
+                    <!-- Product 1: GunsHub Crasher -->
+                    <div class="product-card" data-id="1">
+                        <div class="product-image">
+                            <img src="https://gunshub.online/images/image2.jpg" alt="GunsHub Crasher" class="product-image-img">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">GunsHub Crasher</h3>
+                            <p class="product-description">GunsHub will crash all games by one press of a button</p>
+                            <div class="product-footer">
+                                <a href="gunshub.html" class="add-to-cart">
+                                    <i class="fas fa-eye"></i> View Product
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 2: Virus C2 -->
+                    <div class="product-card" data-id="2">
+                        <div class="product-image">
+                            <img src="https://gunshub.online/images/virus.jpg" alt="Virus C2" class="product-image-img">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Virus C2</h3>
+                            <p class="product-description">Virus C2 Powered By RawAPI</p>
+                            <div class="product-footer">
+                                <a href="virus.html" class="add-to-cart">
+                                    <i class="fas fa-eye"></i> View Product
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 3: RawAPI -->
+                    <div class="product-card" data-id="3">
+                        <div class="product-image">
+                            <img src="https://gunshub.online/images/rawapi.jpg" alt="RawAPI" class="product-image-img">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">RawAPI</h3>
+                            <p class="product-description">RawAPI Is The Strongest API In The Comm</p>
+                            <div class="product-footer">
+                                <a href="rawapi.html" class="add-to-cart">
+                                    <i class="fas fa-eye"></i> View Product
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 4: PremRawsAPI -->
+                    <div class="product-card" data-id="4">
+                        <div class="product-image">
+                            <img src="https://gunshub.online/images/premraws.jpg" alt="PremRawsAPI" class="product-image-img">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">PremRawsAPI</h3>
+                            <p class="product-description">PremRawsAPI With The Strongest Power And Best Bypasses With All L7s, TCPs And UDP Bypasses</p>
+                            <div class="product-footer">
+                                <a href="premrawapi.html" class="add-to-cart">
+                                    <i class="fas fa-eye"></i> View Product
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 5: Start Your Own Online Business -->
+                    <div class="product-card" data-id="5">
+                        <div class="product-image">
+                            <img src="https://gunshub.online/images/business.jpg" alt="Start Your Own Online Business" class="product-image-img">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Start Your Own Online Business</h3>
+                            <p class="product-description">You Want To Make Money Check The Products Here To Help You Earn</p>
+                            <div class="product-footer">
+                                <a href="business.html" class="add-to-cart">
+                                    <i class="fas fa-eye"></i> View Product
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 6: Guns OVH VPNs -->
+                    <div class="product-card" data-id="6">
+                        <div class="product-image">
+                            <img src="https://gunshub.online/images/ovh.jpg" alt="Guns OVH VPNs" class="product-image-img">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Guns OVH VPNs</h3>
+                            <p class="product-description">OVH Plans Here So You Can Be Protected From DDoS Attacks And Kept Anonymous.</p>
+                            <div class="product-footer">
+                                <a href="ovh.html" class="add-to-cart">
+                                    <i class="fas fa-eye"></i> View Product
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -136,9 +230,33 @@
     </div>
 
     <script src="js/particles.js"></script>
-    <script src="js/products.js"></script>
     <script src="js/cart.js"></script>
     <script src="js/chat.js"></script>
+    <script>
+        // Search functionality for static HTML products
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search-input');
+            const productsGrid = document.getElementById('products-grid');
+            const allProductCards = Array.from(productsGrid.querySelectorAll('.product-card'));
+            
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    const query = e.target.value.toLowerCase();
+                    
+                    allProductCards.forEach(card => {
+                        const title = card.querySelector('.product-title').textContent.toLowerCase();
+                        const description = card.querySelector('.product-description').textContent.toLowerCase();
+                        
+                        if (title.includes(query) || description.includes(query)) {
+                            card.style.display = '';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 </html>
 
