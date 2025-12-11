@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://afterschoolsncks.de/images/guns.jpg" type="image/x-icon" />
-    <title>Guns Store - Buy Digital Products</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Products - Guns Store</title>
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -17,8 +17,8 @@
                 <span>Guns Store</span>
             </div>
             <nav class="nav">
-                <a href="/" class="nav-link active">Home</a>
-                <a href="/products" class="nav-link">Products</a>
+                <a href="/" class="nav-link">Home</a>
+                <a href="/products" class="nav-link active">Products</a>
                 <a href="/contactme" class="nav-link">Contact</a>
                 <a href="/cart" class="nav-link" id="cart-link">
                     <i class="fas fa-shopping-cart"></i>
@@ -29,91 +29,17 @@
     </header>
 
     <main>
-        <section class="hero">
+        <section class="products-section">
             <div class="container">
-                <h1 class="hero-title">Welcome to <span class="highlight">Guns Store</span>!</h1>
-                <p class="hero-subtitle">Your trusted marketplace for digital products</p>
-                <a href="/products" class="btn btn-primary">
-                    View Products
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-        </section>
-
-        <section class="features">
-            <div class="container">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shipping-fast"></i>
+                <div class="products-header">
+                    <h1>All Products</h1>
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-input" placeholder="Search products...">
                     </div>
-                    <h3>INSTANT DELIVERY</h3>
-                    <p>We provide instant delivery for all of our products to ensure the best experience for our customers.</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>SECURE PAYMENTS</h3>
-                    <p>We use the latest technology to ensure that your payments are secure and your data is safe.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <h3>24/7 SUPPORT</h3>
-                    <p>Our support team is available 24/7 to help you with any questions or issues you might have.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-box"></i>
-                    </div>
-                    <h3>HUGE SELECTION</h3>
-                    <p>We offer a huge selection of products to ensure that you can find exactly what you need.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="start-business">
-            <div class="container">
-                <div class="business-content">
-                    <h2 class="section-title">Start Your Business/Buy Products</h2>
-                    <p class="business-description">Launch your digital business with our powerful APIs and tools. Build, scale, and grow with the strongest solutions in the market.</p>
-                    <div class="business-features">
-                        <div class="business-feature">
-                            <div class="business-icon">
-                                <i class="fas fa-rocket"></i>
-                            </div>
-                            <h3>Powerful APIs</h3>
-                            <p>Access to the strongest APIs with the best bypasses and methods</p>
-                        </div>
-                        <div class="business-feature">
-                            <div class="business-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <h3>Scalable Solutions</h3>
-                            <p>Grow your business with plans that scale with your needs</p>
-                        </div>
-                        <div class="business-feature">
-                            <div class="business-icon">
-                                <i class="fas fa-headset"></i>
-                            </div>
-                            <h3>24/7 Support</h3>
-                            <p>Get help whenever you need it with our dedicated support team</p>
-                        </div>
-                    </div>
-                    <a href="/products" class="btn btn-primary btn-large">
-                        Explore Products
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <section class="featured-products">
-            <div class="container">
-                <h2 class="section-title">Featured Products</h2>
-                <div class="products-grid" id="featured-products">
-                    <!-- Featured Product 1: GunsHub Crasher -->
+                <div class="products-grid" id="products-grid">
+                    <!-- Product 1: GunsHub Crasher -->
                     <div class="product-card" data-id="1">
                         <div class="product-image">
                             <img src="https://gunshub.online/images/image2.jpg" alt="GunsHub Crasher" class="product-image-img">
@@ -129,7 +55,7 @@
                         </div>
                     </div>
 
-                    <!-- Featured Product 2: Virus C2 -->
+                    <!-- Product 2: Virus C2 -->
                     <div class="product-card" data-id="2">
                         <div class="product-image">
                             <img src="https://gunshub.online/images/virus.jpg" alt="Virus C2" class="product-image-img">
@@ -145,7 +71,7 @@
                         </div>
                     </div>
 
-                    <!-- Featured Product 3: RawAPI -->
+                    <!-- Product 3: RawAPI -->
                     <div class="product-card" data-id="3">
                         <div class="product-image">
                             <img src="https://gunshub.online/images/rawapi.jpg" alt="RawAPI" class="product-image-img">
@@ -155,6 +81,54 @@
                             <p class="product-description">RawAPI Is The Strongest API In The Comm</p>
                             <div class="product-footer">
                                 <a href="/rawapi" class="add-to-cart">
+                                    <i class="fas fa-eye"></i> View Product
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 4: PremRawsAPI -->
+                    <div class="product-card" data-id="4">
+                        <div class="product-image">
+                            <img src="https://gunshub.online/images/premraws.jpg" alt="PremRawsAPI" class="product-image-img">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">PremRawsAPI</h3>
+                            <p class="product-description">PremRawsAPI With The Strongest Power And Best Bypasses With All L7s, TCPs And UDP Bypasses</p>
+                            <div class="product-footer">
+                                <a href="/premrawapi" class="add-to-cart">
+                                    <i class="fas fa-eye"></i> View Product
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 5: Start Your Own Online Business -->
+                    <div class="product-card" data-id="5">
+                        <div class="product-image">
+                            <img src="https://gunshub.online/images/business.jpg" alt="Start Your Own Online Business" class="product-image-img">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Start Your Own Online Business</h3>
+                            <p class="product-description">You Want To Make Money Check The Products Here To Help You Earn</p>
+                            <div class="product-footer">
+                                <a href="/business" class="add-to-cart">
+                                    <i class="fas fa-eye"></i> View Product
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 6: Guns OVH VPNs -->
+                    <div class="product-card" data-id="6">
+                        <div class="product-image">
+                            <img src="https://gunshub.online/images/ovh.jpg" alt="Guns OVH VPNs" class="product-image-img">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Guns OVH VPNs</h3>
+                            <p class="product-description">OVH Plans Here So You Can Be Protected From DDoS Attacks And Kept Anonymous.</p>
+                            <div class="product-footer">
+                                <a href="/ovh" class="add-to-cart">
                                     <i class="fas fa-eye"></i> View Product
                                 </a>
                             </div>
@@ -255,9 +229,34 @@
         </div>
     </div>
 
-    <script src="js/particles.js"></script>
-    <script src="js/cart.js"></script>
-    <script src="js/chat.js"></script>
+    <script src="../js/particles.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/chat.js"></script>
+    <script>
+        // Search functionality for static HTML products
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search-input');
+            const productsGrid = document.getElementById('products-grid');
+            const allProductCards = Array.from(productsGrid.querySelectorAll('.product-card'));
+            
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    const query = e.target.value.toLowerCase();
+                    
+                    allProductCards.forEach(card => {
+                        const title = card.querySelector('.product-title').textContent.toLowerCase();
+                        const description = card.querySelector('.product-description').textContent.toLowerCase();
+                        
+                        if (title.includes(query) || description.includes(query)) {
+                            card.style.display = '';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 </html>
 

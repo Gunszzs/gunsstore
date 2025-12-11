@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Guns Store</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/checkout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/jpeg" href="https://afterschoolsncks.de/images/guns.jpg">
+    <style>
+        .cart-page {
+            padding: 3rem 0;
+        }
+        .cart-container {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+        }
+        .cart-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        .cart-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        .cart-content {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            min-height: 400px;
+        }
+        .cart-empty {
+            text-align: center;
+            color: var(--text-gray);
+            padding: 3rem 0;
+            font-size: 1.1rem;
+        }
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .cart-item {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+        .cart-item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        .cart-item-icon {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(30, 58, 138, 0.1);
+            border-radius: 6px;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+        .cart-item-details {
+            flex: 1;
+        }
+        .cart-item-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+        .cart-item-description {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .cart-item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .cart-item-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--text-light);
+        }
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .quantity-btn-small {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-light);
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        .quantity-btn-small:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        .quantity-value-small {
+            min-width: 30px;
+            text-align: center;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+        .remove-item {
+            background: transparent;
+            border: none;
+            color: #e74c3c;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: color 0.3s;
+        }
+        .remove-item:hover {
+            color: #c0392b;
+        }
+        .order-summary {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+        .order-summary-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            color: var(--text-gray);
+        }
+        .summary-row.total {
+            border-top: 1px solid var(--border-color);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--text-light);
+        }
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #c0392b;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: background 0.3s;
+        }
+        .checkout-btn:hover {
+            background: #a93226;
+        }
+        .checkout-btn:disabled {
+            background: var(--border-color);
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particle-canvas"></canvas>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="https://afterschoolsncks.de/images/guns.jpg" alt="Guns Store Icon" class="logo-icon">
+                <span>Guns Store</span>
+            </div>
+            <nav class="nav">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/products" class="nav-link">Products</a>
+                <a href="/contactme" class="nav-link">Contact</a>
+                <a href="/cart" class="nav-link" id="cart-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    Cart (<span id="cart-count">0</span>)
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="cart-page">
+            <div class="container">
+                <h1 class="cart-title">Shopping Cart</h1>
+                <div class="cart-container">
+                    <div class="cart-content" id="cart-content">
+                        <div class="cart-empty">
+                            Your cart is empty.
+                        </div>
+                    </div>
+
+                    <div class="order-summary">
+                        <h2 class="order-summary-title">Your Order</h2>
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span id="total">$0.00</span>
+                        </div>
+                        <button class="checkout-btn" id="checkout-btn" disabled>
+                            <i class="fas fa-shopping-cart"></i> Checkout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; Copyright © Guns Store 2025</p>
+        </div>
+    </footer>
+
+    <script src="../js/particles.js"></script>
+    <script src="../js/cart.js"></script>
+    <script>
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartCountElements = document.querySelectorAll('#cart-count');
+            cartCountElements.forEach(el => {
+                if (el) el.textContent = count;
+            });
+        }
+
+        function displayCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartContent = document.getElementById('cart-content');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            
+            if (cart.length === 0) {
+                cartContent.innerHTML = '<div class="cart-empty">Your cart is empty.</div>';
+                checkoutBtn.disabled = true;
+                updateTotals(0);
+                return;
+            }
+
+            checkoutBtn.disabled = false;
+            
+            let total = 0;
+            cartContent.innerHTML = '<div class="cart-items"></div>';
+            const cartItems = cartContent.querySelector('.cart-items');
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    ${item.image ? 
+                        `<img src="${item.image}" alt="${item.title}" class="cart-item-image">` :
+                        `<div class="cart-item-icon"><i class="${item.icon || 'fas fa-box'}"></i></div>`
+                    }
+                    <div class="cart-item-details">
+                        <div class="cart-item-title">${item.title}</div>
+                        <div class="cart-item-description">${item.description || ''}</div>
+                        <div class="cart-item-footer">
+                            <div class="cart-item-price">$${itemTotal.toFixed(2)}</div>
+                            <div class="cart-item-quantity">
+                                <div class="quantity-control">
+                                    <button class="quantity-btn-small" onclick="updateQuantity(${index}, -1)">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <span class="quantity-value-small">${item.quantity}</span>
+                                    <button class="quantity-btn-small" onclick="updateQuantity(${index}, 1)">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <button class="remove-item" onclick="removeItem(${index})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+
+            updateTotals(total);
+        }
+
+        function updateQuantity(index, change) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart[index]) {
+                cart[index].quantity += change;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+                localStorage.setItem('cart', JSON.stringify(cart));
+                displayCart();
+                updateCartCount();
+            }
+        }
+
+        function removeItem(index) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            displayCart();
+            updateCartCount();
+        }
+
+        function updateTotals(total) {
+            document.getElementById('subtotal').textContent = '$' + total.toFixed(2);
+            document.getElementById('total').textContent = '$' + total.toFixed(2);
+        }
+
+        document.getElementById('checkout-btn').addEventListener('click', () => {
+            window.location.href = '/checkout';
+        });
+
+        // Initialize
+        displayCart();
+        updateCartCount();
+    </script>
+
+    <!-- Chat Widget -->
+    <button class="chat-widget-button" id="chat-widget-button" title="Contact Support">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <div class="chat-window" id="chat-window">
+        <div class="chat-header">
+            <h3>Contact Support</h3>
+            <button class="close-chat" id="close-chat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="chat-tabs">
+            <button class="chat-tab active" id="live-chat-tab">
+                <i class="fas fa-comment"></i> Live Chat
+            </button>
+            <button class="chat-tab" id="email-tab">
+                <i class="fas fa-envelope"></i> Email
+            </button>
+        </div>
+
+        <div class="chat-content">
+            <!-- Live Chat Panel -->
+            <div class="chat-panel active" id="live-chat-content">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="chat-message support">
+                        <div class="chat-message-content">
+                            Hello! How can we help you today?
+                        </div>
+                        <div class="chat-message-time">Now</div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chat-input" placeholder="Type your message...">
+                    <button class="send-chat-btn" id="send-message-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Email Panel -->
+            <div class="chat-panel" id="email-content">
+                <form class="email-form" id="email-form">
+                    <div class="email-form-group">
+                        <label class="email-form-label" for="email-address">Your Email</label>
+                        <input type="email" class="email-form-input" id="email-address" placeholder="your.email@example.com" required>
+                    </div>
+                    <div class="email-form-group">
+                        <label class="email-form-label" for="email-subject">Subject</label>
+                        <input type="text" class="email-form-input" id="email-subject" placeholder="What is this regarding?" required>
+                    </div>
+                    <div class="email-form-group">
+                        <label class="email-form-label" for="email-message">Message</label>
+                        <textarea class="email-form-textarea" id="email-message" placeholder="Tell us how we can help..." required></textarea>
+                    </div>
+                    <button type="submit" class="send-email-btn" id="send-email-btn">
+                        <i class="fas fa-envelope"></i> Send Email
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/chat.js"></script>
+</body>
+</html>
+

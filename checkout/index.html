@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://afterschoolsncks.de/images/guns.jpg" type="image/x-icon" />
+    <title>Checkout - Guns Store</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/checkout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <canvas id="particle-canvas"></canvas>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="https://afterschoolsncks.de/images/guns.jpg" alt="Guns Store Icon" class="logo-icon">
+                <span>Guns Store</span>
+            </div>
+            <nav class="nav">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/products" class="nav-link">Products</a>
+                <a href="/contactme" class="nav-link">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="checkout-section">
+            <div class="container">
+                <h1>Checkout</h1>
+                
+                <div class="checkout-container">
+                    <div class="checkout-left">
+                        <div class="order-summary">
+                            <h2>Order Summary</h2>
+                            <div id="checkout-items">
+                                <!-- Items will be loaded here -->
+                            </div>
+                            <div class="order-total">
+                                <div class="total-row">
+                                    <span>Subtotal:</span>
+                                    <span>$<span id="subtotal">0.00</span></span>
+                                </div>
+                                <div class="total-row">
+                                    <span>Total:</span>
+                                    <span class="total-amount">$<span id="total">0.00</span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="customer-info">
+                            <h2>Customer Information</h2>
+                            <form id="customer-form">
+                                <div class="form-group">
+                                    <label for="email">Email Address *</label>
+                                    <input type="email" id="email" name="email" required placeholder="your@email.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Full Name *</label>
+                                    <input type="text" id="name" name="name" required placeholder="John Doe">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="checkout-right">
+                        <div class="payment-methods">
+                            <h2>Select Payment Method</h2>
+                            
+                            <div class="payment-option" data-method="paypal">
+                                <input type="radio" id="paypal" name="payment" value="paypal">
+                                <label for="paypal">
+                                    <i class="fab fa-paypal"></i>
+                                    <span>PayPal</span>
+                                </label>
+                            </div>
+
+                            <div class="payment-option" data-method="bitcoin">
+                                <input type="radio" id="bitcoin" name="payment" value="bitcoin">
+                                <label for="bitcoin">
+                                    <i class="fab fa-bitcoin"></i>
+                                    <span>Bitcoin (BTC)</span>
+                                </label>
+                            </div>
+
+                            <div class="payment-option" data-method="litecoin">
+                                <input type="radio" id="litecoin" name="payment" value="litecoin">
+                                <label for="litecoin">
+                                    <i class="fas fa-coins"></i>
+                                    <span>Litecoin (LTC)</span>
+                                </label>
+                            </div>
+
+                            <div id="payment-details" class="payment-details hidden">
+                                <!-- Payment method specific details will appear here -->
+                            </div>
+
+                            <button class="btn btn-primary btn-block" id="process-payment" disabled>
+                                <i class="fas fa-lock"></i>
+                                Complete Purchase
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; Copyright © Guns Store 2025</p>
+        </div>
+    </footer>
+
+    <!-- Payment Processing Modal -->
+    <div class="modal" id="payment-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Processing Payment</h3>
+                <button class="close-modal" id="close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Payment processing details -->
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/particles.js"></script>
+    <script src="../js/checkout.js"></script>
+    <script src="../js/payment.js"></script>
+
+    <!-- Chat Widget -->
+    <button class="chat-widget-button" id="chat-widget-button" title="Contact Support">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <div class="chat-window" id="chat-window">
+        <div class="chat-header">
+            <h3>Contact Support</h3>
+            <button class="close-chat" id="close-chat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="chat-tabs">
+            <button class="chat-tab active" id="live-chat-tab">
+                <i class="fas fa-comment"></i> Live Chat
+            </button>
+            <button class="chat-tab" id="email-tab">
+                <i class="fas fa-envelope"></i> Email
+            </button>
+        </div>
+
+        <div class="chat-content">
+            <!-- Live Chat Panel -->
+            <div class="chat-panel active" id="live-chat-content">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="chat-message support">
+                        <div class="chat-message-content">
+                            Hello! How can we help you today?
+                        </div>
+                        <div class="chat-message-time">Now</div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chat-input" placeholder="Type your message...">
+                    <button class="send-chat-btn" id="send-message-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Email Panel -->
+            <div class="chat-panel" id="email-content">
+                <form class="email-form" id="email-form">
+                    <div class="email-form-group">
+                        <label class="email-form-label" for="email-address">Your Email</label>
+                        <input type="email" class="email-form-input" id="email-address" placeholder="your.email@example.com" required>
+                    </div>
+                    <div class="email-form-group">
+                        <label class="email-form-label" for="email-subject">Subject</label>
+                        <input type="text" class="email-form-input" id="email-subject" placeholder="What is this regarding?" required>
+                    </div>
+                    <div class="email-form-group">
+                        <label class="email-form-label" for="email-message">Message</label>
+                        <textarea class="email-form-textarea" id="email-message" placeholder="Tell us how we can help..." required></textarea>
+                    </div>
+                    <button type="submit" class="send-email-btn" id="send-email-btn">
+                        <i class="fas fa-envelope"></i> Send Email
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="../js/chat.js"></script>
+    <script>
+        // Initialize EmailJS (you'll need to replace with your public key)
+        // Get your keys from https://www.emailjs.com/
+        emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+    </script>
+</body>
+</html>
+
