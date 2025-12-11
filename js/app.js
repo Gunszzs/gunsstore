@@ -74,8 +74,9 @@ function displayFeaturedProducts(products) {
     featuredProductsGrid.innerHTML = products.map(product => `
         <div class="product-card" data-id="${product.id}">
             <div class="product-image">
-                <img src="${product.image || PRODUCT_IMAGE_URL}" alt="${product.title}" class="product-image-img"
-                     onerror="this.style.display='none'; const parent = this.parentElement; if (!parent.querySelector('i')) { const fallback = document.createElement('i'); fallback.className = '${product.icon || 'fas fa-box'}'; parent.appendChild(fallback); }">
+                <img src="${product.image || PRODUCT_IMAGE_URL}" alt="${product.title}" class="product-image-img" referrerpolicy="no-referrer" loading="lazy"
+                     onerror="this.style.display='none'; const parent = this.parentElement; if (!parent.querySelector('i')) { const fallback = document.createElement('i'); fallback.className = '${product.icon || 'fas fa-box'}'; parent.appendChild(fallback); }"
+                     onload="this.style.display='block';">
             </div>
             <div class="product-info">
                 <h3 class="product-title">${product.title}</h3>
