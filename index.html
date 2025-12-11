@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://afterschoolsncks.de/images/guns.jpg" type="image/x-icon" />
+    <title>Guns Store - Buy Digital Products</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <canvas id="particle-canvas"></canvas>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="https://afterschoolsncks.de/images/guns.jpg" alt="Guns Store Icon" class="logo-icon">
+                <span>Guns Store</span>
+            </div>
+            <nav class="nav">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="products.html" class="nav-link">Products</a>
+                <a href="contactme.html" class="nav-link">Contact</a>
+                <a href="cart.html" class="nav-link" id="cart-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    Cart (<span id="cart-count">0</span>)
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title">Welcome to <span class="highlight">Guns Store</span>!</h1>
+                <p class="hero-subtitle">Your trusted marketplace for digital products</p>
+                <a href="products.html" class="btn btn-primary">
+                    View Products
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3>INSTANT DELIVERY</h3>
+                    <p>We provide instant delivery for all of our products to ensure the best experience for our customers.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>SECURE PAYMENTS</h3>
+                    <p>We use the latest technology to ensure that your payments are secure and your data is safe.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>24/7 SUPPORT</h3>
+                    <p>Our support team is available 24/7 to help you with any questions or issues you might have.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <h3>HUGE SELECTION</h3>
+                    <p>We offer a huge selection of products to ensure that you can find exactly what you need.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="start-business">
+            <div class="container">
+                <div class="business-content">
+                    <h2 class="section-title">Start Your Business/Buy Products</h2>
+                    <p class="business-description">Launch your digital business with our powerful APIs and tools. Build, scale, and grow with the strongest solutions in the market.</p>
+                    <div class="business-features">
+                        <div class="business-feature">
+                            <div class="business-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <h3>Powerful APIs</h3>
+                            <p>Access to the strongest APIs with the best bypasses and methods</p>
+                        </div>
+                        <div class="business-feature">
+                            <div class="business-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3>Scalable Solutions</h3>
+                            <p>Grow your business with plans that scale with your needs</p>
+                        </div>
+                        <div class="business-feature">
+                            <div class="business-icon">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <h3>24/7 Support</h3>
+                            <p>Get help whenever you need it with our dedicated support team</p>
+                        </div>
+                    </div>
+                    <a href="products.html" class="btn btn-primary btn-large">
+                        Explore Products
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-products">
+            <div class="container">
+                <h2 class="section-title">Featured Products</h2>
+                <div class="products-grid" id="featured-products">
+                    <!-- Products will be loaded here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; Copyright © Guns Store 2025</p>
+        </div>
+    </footer>
+
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="close-cart" id="close-cart">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <p class="empty-cart">Your cart is empty</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <strong>Total: $<span id="cart-total">0.00</span></strong>
+            </div>
+            <button class="btn btn-primary btn-block" id="checkout-btn" disabled>Checkout</button>
+        </div>
+    </div>
+
+    <div class="cart-overlay" id="cart-overlay"></div>
+
+    <!-- Chat Widget -->
+    <button class="chat-widget-button" id="chat-widget-button" title="Contact Support">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <div class="chat-window" id="chat-window">
+        <div class="chat-header">
+            <h3>Contact Support</h3>
+            <button class="close-chat" id="close-chat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="chat-tabs">
+            <button class="chat-tab active" id="live-chat-tab">
+                <i class="fas fa-comment"></i> Live Chat
+            </button>
+            <button class="chat-tab" id="email-tab">
+                <i class="fas fa-envelope"></i> Email
+            </button>
+        </div>
+
+        <div class="chat-content">
+            <!-- Live Chat Panel -->
+            <div class="chat-panel active" id="live-chat-content">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="chat-message support">
+                        <div class="chat-message-content">
+                            Hello! How can we help you today?
+                        </div>
+                        <div class="chat-message-time">Now</div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chat-input" placeholder="Type your message...">
+                    <button class="send-chat-btn" id="send-message-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Email Panel -->
+            <div class="chat-panel" id="email-content">
+                <form class="email-form" id="email-form">
+                    <div class="email-form-group">
+                        <label class="email-form-label" for="email-address">Your Email</label>
+                        <input type="email" class="email-form-input" id="email-address" placeholder="your.email@example.com" required>
+                    </div>
+                    <div class="email-form-group">
+                        <label class="email-form-label" for="email-subject">Subject</label>
+                        <input type="text" class="email-form-input" id="email-subject" placeholder="What is this regarding?" required>
+                    </div>
+                    <div class="email-form-group">
+                        <label class="email-form-label" for="email-message">Message</label>
+                        <textarea class="email-form-textarea" id="email-message" placeholder="Tell us how we can help..." required></textarea>
+                    </div>
+                    <button type="submit" class="send-email-btn" id="send-email-btn">
+                        <i class="fas fa-envelope"></i> Send Email
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/particles.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/chat.js"></script>
+</body>
+</html>
+

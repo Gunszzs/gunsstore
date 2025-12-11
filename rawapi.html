@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RawAPI - Guns Store</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .product-detail-page {
+            padding: 3rem 0;
+        }
+        .product-detail-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .product-detail-left {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .product-image-large {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 0;
+        }
+        .product-detail-right {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+        .rules-list {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+        }
+        .rules-list h3 {
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+        .rules-list ol {
+            padding-left: 1.5rem;
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+        .rules-list li {
+            margin-bottom: 0.5rem;
+        }
+        .targets-info {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 1rem;
+        }
+        .pricing-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            position: relative;
+        }
+        .pricing-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        .pricing-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-light);
+            margin: 0;
+        }
+        .price-stock-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .price-display {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--text-light);
+            margin: 0;
+        }
+        .variant-list {
+            margin-top: 1.5rem;
+        }
+        .variant-item {
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .variant-item:hover {
+            border-color: var(--primary-color);
+        }
+        .variant-item.selected {
+            border-color: var(--primary-color);
+            background: rgba(30, 58, 138, 0.1);
+        }
+        .variant-title {
+            font-weight: bold;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+        .variant-details {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        .variant-price {
+            color: var(--text-light);
+            font-weight: bold;
+        }
+        .variant-item .stock-badge {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            margin: 0;
+        }
+        .stock-badge {
+            display: inline-block;
+            background: var(--success-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+        .quantity-section {
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .quantity-label {
+            color: var(--text-light);
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+        .quantity-input {
+            display: flex;
+            align-items: center;
+            background: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0.5rem;
+            width: 100%;
+        }
+        .quantity-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s;
+        }
+        .quantity-btn:hover {
+            color: var(--primary-color);
+        }
+        .quantity-value {
+            flex: 1;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .btn-buy-now {
+            background: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn-buy-now:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particle-canvas"></canvas>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="https://afterschoolsncks.de/images/guns.jpg" alt="Guns Store Icon" class="logo-icon">
+                <span>Guns Store</span>
+            </div>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="products.html" class="nav-link">Products</a>
+                <a href="contactme.html" class="nav-link">Contact</a>
+                <a href="cart.html" class="nav-link" id="cart-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    Cart (<span id="cart-count">0</span>)
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="product-detail-page">
+            <div class="container">
+                <div class="product-detail-container">
+                    <div class="product-detail-left">
+                        <img src="http://51.89.251.240/images/rawapi.png" alt="RawAPI" class="product-image-large">
+                        
+                        <div class="rules-list">
+                            <h3>Rules & Information</h3>
+                            <ol>
+                                <li>Multi Con Allowed.</li>
+                                <li>DSTAT Blocked.</li>
+                                <li>No Sharing Keys.</li>
+                                <li>Your Backend IPv4 Will Need To Be Whitelisted (Disable IPv6 Or Send It To Me To Be Whitelisted).</li>
+                                <li>No Hitting GOVs Hitting a gov will terminate your key instantly.</li>
+                            </ol>
+                        </div>
+
+                        <div class="targets-info">
+                            <h3>What RawAPI Can Do:</h3>
+                            <p style="color: var(--text-gray); line-height: 1.8;">
+                                RawAPI slams Fivem, rocket league, call of duty (All Cods), OVH's, VPN's Hotspots, Homes, Websites & More.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="product-detail-right">
+                        <div class="pricing-card">
+                            <div class="pricing-header">
+                                <h1 class="pricing-title">RawAPI</h1>
+                                <div class="price-stock-container">
+                                    <div class="price-display" id="selected-price">$29.99</div>
+                                </div>
+                            </div>
+
+                            <div class="variant-list">
+                                <h3 style="margin-bottom: 1rem; color: var(--text-light);">Select Plan:</h3>
+                                
+                                <div class="variant-item selected" data-price="29.99" data-variant="monthly-1">
+                                    <span class="stock-badge">In Stock</span>
+                                    <div class="variant-title">RawAPI Monthly Plan #1</div>
+                                    <div class="variant-details">1 Conc | 45 Seconds | 15 Cooldown | Basic & VIP Access</div>
+                                    <div class="variant-price">$29.99</div>
+                                </div>
+
+                                <div class="variant-item" data-price="39.99" data-variant="monthly-2">
+                                    <span class="stock-badge">In Stock</span>
+                                    <div class="variant-title">RawAPI Monthly Plan #2</div>
+                                    <div class="variant-details">2 Concs | 60 Seconds | 0 Cooldown | Basic & VIP Access</div>
+                                    <div class="variant-price">$39.99</div>
+                                </div>
+
+                                <div class="variant-item" data-price="59.99" data-variant="monthly-3">
+                                    <span class="stock-badge">In Stock</span>
+                                    <div class="variant-title">RawAPI Monthly Plan #3</div>
+                                    <div class="variant-details">3 Concs | 120 Seconds | 0 Cooldown | Basic & VIP Access</div>
+                                    <div class="variant-price">$59.99</div>
+                                </div>
+
+                                <div class="variant-item" data-price="79.99" data-variant="monthly-4">
+                                    <span class="stock-badge">In Stock</span>
+                                    <div class="variant-title">RawAPI Monthly Plan #4</div>
+                                    <div class="variant-details">4 Concs | 150 Seconds | 0 Cooldown | Basic & VIP Access</div>
+                                    <div class="variant-price">$79.99</div>
+                                </div>
+
+                                <div class="variant-item" data-price="99.99" data-variant="monthly-5">
+                                    <span class="stock-badge">In Stock</span>
+                                    <div class="variant-title">RawAPI Monthly Plan #5</div>
+                                    <div class="variant-details">5 Concs | 180 Seconds | 0 Cooldown | Basic & VIP Access</div>
+                                    <div class="variant-price">$99.99</div>
+                                </div>
+
+                                <div class="variant-item" data-price="299.99" data-variant="monthly-6">
+                                    <span class="stock-badge">In Stock</span>
+                                    <div class="variant-title">RawAPI Monthly Plan #6</div>
+                                    <div class="variant-details">10 Concs | 1000 Seconds | 0 Cooldown | Basic & VIP Access | Homeholder Access</div>
+                                    <div class="variant-price">$299.99</div>
+                                </div>
+
+                                <div class="variant-item" data-price="119.99" data-variant="lifetime-1">
+                                    <span class="stock-badge">In Stock</span>
+                                    <div class="variant-title">RawAPI Lifetime Plan #1</div>
+                                    <div class="variant-details">2 Concs | 120 Seconds | 15 Cooldown | Basic & VIP Access</div>
+                                    <div class="variant-price">$119.99</div>
+                                </div>
+
+                                <div class="variant-item" data-price="179.99" data-variant="lifetime-2">
+                                    <span class="stock-badge">In Stock</span>
+                                    <div class="variant-title">RawAPI Lifetime Plan #2</div>
+                                    <div class="variant-details">4 Concs | 180 Seconds | 0 Cooldown | Basic & VIP Access</div>
+                                    <div class="variant-price">$179.99</div>
+                                </div>
+
+                                <div class="variant-item" data-price="299.99" data-variant="lifetime-3">
+                                    <span class="stock-badge">In Stock</span>
+                                    <div class="variant-title">RawAPI Lifetime Plan #3</div>
+                                    <div class="variant-details">6 Concs | 300 Seconds | 0 Cooldown | Basic & VIP Access | Homeholder Access</div>
+                                    <div class="variant-price">$299.99</div>
+                                </div>
+
+                                <div class="variant-item" data-price="649.99" data-variant="lifetime-4">
+                                    <span class="stock-badge">In Stock</span>
+                                    <div class="variant-title">RawAPI Lifetime Plan #4</div>
+                                    <div class="variant-details">10 Concs | 1000 Seconds | 0 Cooldown | Basic & VIP Access | Homeholder Access | PremRaws Access</div>
+                                    <div class="variant-price">$649.99</div>
+                                </div>
+                            </div>
+
+                            <div class="quantity-section">
+                                <div class="quantity-label">Quantity</div>
+                                <div class="quantity-input">
+                                    <button class="quantity-btn" id="quantity-decrease">-</button>
+                                    <span class="quantity-value" id="quantity-value">1</span>
+                                    <button class="quantity-btn" id="quantity-increase">+</button>
+                                </div>
+                            </div>
+
+                            <div class="action-buttons">
+                                <button class="btn btn-primary" id="add-to-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                                <button class="btn-buy-now" id="buy-now-btn">
+                                    Buy Now <i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; Copyright © Guns Store 2025</p>
+        </div>
+    </footer>
+
+    <script src="js/particles.js"></script>
+    <script src="js/cart.js"></script>
+    <script>
+        // Quantity management
+        let quantity = 1;
+        const quantityValue = document.getElementById('quantity-value');
+        const quantityDecrease = document.getElementById('quantity-decrease');
+        const quantityIncrease = document.getElementById('quantity-increase');
+
+        quantityDecrease.addEventListener('click', () => {
+            if (quantity > 1) {
+                quantity--;
+                quantityValue.textContent = quantity;
+            }
+        });
+
+        quantityIncrease.addEventListener('click', () => {
+            quantity++;
+            quantityValue.textContent = quantity;
+        });
+
+        // Variant selection
+        document.querySelectorAll('.variant-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.variant-item').forEach(i => i.classList.remove('selected'));
+                item.classList.add('selected');
+                const price = item.getAttribute('data-price');
+                document.getElementById('selected-price').textContent = '$' + price;
+            });
+        });
+
+        function addToCart() {
+            const selectedVariant = document.querySelector('.variant-item.selected');
+            if (!selectedVariant) {
+                alert('Please select a plan first');
+                return;
+            }
+
+            const variantTitle = selectedVariant.querySelector('.variant-title').textContent;
+            const price = parseFloat(selectedVariant.getAttribute('data-price'));
+            
+            const product = {
+                id: 3,
+                title: `RawAPI - ${variantTitle}`,
+                description: "RawAPI Is The Strongest API In The Comm",
+                price: price,
+                icon: "fas fa-file-alt",
+                image: "http://51.89.251.240/images/rawapi.png"
+            };
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Add product with quantity
+            for (let i = 0; i < quantity; i++) {
+                cart.push({ ...product, quantity: 1 });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Update cart count
+            const cartCountElements = document.querySelectorAll('#cart-count');
+            cartCountElements.forEach(el => {
+                if (el) el.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+            });
+
+            // Show notification
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--primary-color);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 6px;
+                z-index: 10000;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            `;
+            notification.textContent = 'Product added to cart!';
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.3s';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Add to cart button
+        document.getElementById('add-to-cart-btn').addEventListener('click', addToCart);
+
+        // Buy Now button
+        document.getElementById('buy-now-btn').addEventListener('click', () => {
+            addToCart();
+            // Redirect to checkout after a short delay
+            setTimeout(() => {
+                window.location.href = 'checkout.html';
+            }, 500);
+        });
+    </script>
+
+    <!-- Chat Widget -->
+    <button class="chat-widget-button" id="chat-widget-button" title="Contact Support">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <div class="chat-window" id="chat-window">
+        <div class="chat-header">
+            <h3>Contact Support</h3>
+            <button class="close-chat" id="close-chat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="chat-tabs">
+            <button class="chat-tab active" id="live-chat-tab">
+                <i class="fas fa-comment"></i> Live Chat
+            </button>
+            <button class="chat-tab" id="email-tab">
+                <i class="fas fa-envelope"></i> Email
+            </button>
+        </div>
+
+        <div class="chat-content">
+            <!-- Live Chat Panel -->
+            <div class="chat-panel active" id="live-chat-content">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="chat-message support">
+                        <div class="chat-message-content">
+                            Hello! How can we help you today?
+                        </div>
+                        <div class="chat-message-time">Now</div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chat-input" placeholder="Type your message...">
+                    <button class="send-chat-btn" id="send-message-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Email Panel -->
+            <div class="chat-panel" id="email-content">
+                <form class="email-form" id="email-form">
+                    <div class="email-form-group">
+                        <label class="email-form-label" for="email-address">Your Email</label>
+                        <input type="email" class="email-form-input" id="email-address" placeholder="your.email@example.com" required>
+                    </div>
+                    <div class="email-form-group">
+                        <label class="email-form-label" for="email-subject">Subject</label>
+                        <input type="text" class="email-form-input" id="email-subject" placeholder="What is this regarding?" required>
+                    </div>
+                    <div class="email-form-group">
+                        <label class="email-form-label" for="email-message">Message</label>
+                        <textarea class="email-form-textarea" id="email-message" placeholder="Tell us how we can help..." required></textarea>
+                    </div>
+                    <button type="submit" class="send-email-btn" id="send-email-btn">
+                        <i class="fas fa-envelope"></i> Send Email
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/chat.js"></script>
+</body>
+</html>
+

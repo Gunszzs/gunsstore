@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://afterschoolsncks.de/images/guns.jpg" type="image/x-icon" />
+    <title>Contact Us - Guns Store</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .contact-section {
+            padding: 4rem 0;
+            min-height: calc(100vh - 200px);
+        }
+        
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .contact-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .contact-header h1 {
+            font-size: 2.5rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+        
+        .contact-header p {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+        }
+        
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+        
+        .contact-info {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+        }
+        
+        .contact-info h2 {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-item i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-top: 0.2rem;
+        }
+        
+        .info-item-content h3 {
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .info-item-content p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        
+        .contact-form {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+        }
+        
+        .contact-form h2 {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-light);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary-color);
+            color: var(--text-light);
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .submit-btn:hover {
+            background: var(--secondary-color);
+        }
+        
+        .submit-btn:disabled {
+            background: var(--border-color);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        .success-message {
+            background: rgba(39, 174, 96, 0.1);
+            border: 1px solid var(--success-color);
+            border-radius: 6px;
+            padding: 1rem;
+            color: var(--success-color);
+            text-align: center;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        
+        .success-message.show {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particle-canvas"></canvas>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="https://afterschoolsncks.de/images/guns.jpg" alt="Guns Store Icon" class="logo-icon">
+                <span>Guns Store</span>
+            </div>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="products.html" class="nav-link">Products</a>
+                <a href="contactme.html" class="nav-link active">Contact</a>
+                <a href="cart.html" class="nav-link" id="cart-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    Cart (<span id="cart-count">0</span>)
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-container">
+                    <div class="contact-header">
+                        <h1>Contact Us</h1>
+                        <p>We'd love to hear from you! Send us a message and we'll respond as soon as possible.</p>
+                    </div>
+
+                    <div class="contact-content">
+                        <div class="contact-info">
+                            <h2>Get in Touch</h2>
+                            <div class="info-item">
+                                <i class="fas fa-envelope"></i>
+                                <div class="info-item-content">
+                                    <h3>Email</h3>
+                                    <p>br02934a@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-clock"></i>
+                                <div class="info-item-content">
+                                    <h3>Response Time</h3>
+                                    <p>We typically respond within 24 hours</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-headset"></i>
+                                <div class="info-item-content">
+                                    <h3>Support</h3>
+                                    <p>Available 24/7 for your convenience</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fab fa-telegram"></i>
+                                <div class="info-item-content">
+                                    <h3>Telegram</h3>
+                                    <p><a href="https://t.me/Gunsv1" target="_blank" style="color: var(--primary-color); text-decoration: none;">@Gunsv1</a></p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fab fa-discord"></i>
+                                <div class="info-item-content">
+                                    <h3>Discord</h3>
+                                    <p>gunsl7</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fab fa-tiktok"></i>
+                                <div class="info-item-content">
+                                    <h3>TikTok</h3>
+                                    <p><a href="https://www.tiktok.com/@gunszzs" target="_blank" style="color: var(--primary-color); text-decoration: none;">@gunszzs</a></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contact-form">
+                            <h2>Send us a Message</h2>
+                            <div class="success-message" id="success-message">
+                                <i class="fas fa-check-circle"></i> Thank you! Your message has been sent successfully.
+                            </div>
+                            <form id="contact-form">
+                                <div class="form-group">
+                                    <label for="name">Your Name *</label>
+                                    <input type="text" id="name" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Your Email *</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="subject">Subject *</label>
+                                    <input type="text" id="subject" name="subject" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">Message *</label>
+                                    <textarea id="message" name="message" required></textarea>
+                                </div>
+                                <button type="submit" class="submit-btn" id="submit-btn">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Send Message
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; Copyright © Guns Store 2025</p>
+        </div>
+    </footer>
+
+    <!-- Chat Widget -->
+    <button class="chat-widget-button" id="chat-widget-button" title="Contact Support">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <div class="chat-window" id="chat-window">
+        <div class="chat-header">
+            <h3>Contact Support</h3>
+            <button class="close-chat" id="close-chat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="chat-tabs">
+            <button class="chat-tab active" id="live-chat-tab">
+                <i class="fas fa-comment"></i> Live Chat
+            </button>
+            <button class="chat-tab" id="email-tab">
+                <i class="fas fa-envelope"></i> Email
+            </button>
+        </div>
+
+        <div class="chat-content">
+            <!-- Live Chat Panel -->
+            <div class="chat-panel active" id="live-chat-content">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="chat-message support">
+                        <div class="chat-message-content">
+                            Hello! How can we help you today?
+                        </div>
+                        <div class="chat-message-time">Now</div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chat-input" placeholder="Type your message...">
+                    <button class="send-chat-btn" id="send-message-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Email Panel -->
+            <div class="chat-panel" id="email-content">
+                <form class="email-form" id="email-form">
+                    <div class="email-form-group">
+                        <label class="email-form-label" for="email-address">Your Email</label>
+                        <input type="email" class="email-form-input" id="email-address" placeholder="your.email@example.com" required>
+                    </div>
+                    <div class="email-form-group">
+                        <label class="email-form-label" for="email-subject">Subject</label>
+                        <input type="text" class="email-form-input" id="email-subject" placeholder="What is this regarding?" required>
+                    </div>
+                    <div class="email-form-group">
+                        <label class="email-form-label" for="email-message">Message</label>
+                        <textarea class="email-form-textarea" id="email-message" placeholder="Tell us how we can help..." required></textarea>
+                    </div>
+                    <button type="submit" class="send-email-btn" id="send-email-btn">
+                        <i class="fas fa-envelope"></i> Send Email
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/particles.js"></script>
+    <script src="js/chat.js"></script>
+    <script>
+        // Update cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartCountElement = document.getElementById('cart-count');
+            if (cartCountElement) {
+                cartCountElement.textContent = count;
+            }
+        }
+
+        // Contact form submission
+        document.getElementById('contact-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submit-btn');
+            const successMessage = document.getElementById('success-message');
+            const form = document.getElementById('contact-form');
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            
+            try {
+                // Using Web3Forms to send email
+                const WEB3FORMS_ACCESS_KEY = 'ff3a61f7-859c-4b85-bbbb-48854eae401f';
+                
+                const formData = new FormData();
+                formData.append('access_key', WEB3FORMS_ACCESS_KEY);
+                formData.append('subject', `Contact Form: ${subject}`);
+                formData.append('from_name', name);
+                formData.append('email', email);
+                formData.append('message', `From: ${name} (${email})\n\nSubject: ${subject}\n\nMessage:\n${message}`);
+                formData.append('replyto', email);
+                
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    successMessage.classList.add('show');
+                    form.reset();
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        successMessage.classList.remove('show');
+                    }, 5000);
+                } else {
+                    alert('Failed to send message. Please try again or email us directly at br02934a@gmail.com');
+                }
+            } catch (error) {
+                console.error('Error sending message:', error);
+                alert('Failed to send message. Please try again or email us directly at br02934a@gmail.com');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+            }
+        });
+        
+        // Initialize
+        updateCartCount();
+    </script>
+</body>
+</html>
+
