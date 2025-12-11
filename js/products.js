@@ -1,5 +1,5 @@
 // Image configuration - VPS hosted image
-const PRODUCT_IMAGE_URL = 'http://51.89.251.240/images/image2.png';
+const PRODUCT_IMAGE_URL = 'https://gunshub.online/images/image2.jpg';
 
 // Products data
 const products = [
@@ -16,7 +16,7 @@ const products = [
         description: "Virus C2 Powered By RawAPI",
         price: 99.99,
         icon: "fas fa-graduation-cap",
-        image: "http://51.89.251.240/images/Virus.png"
+        image: "https://gunshub.online/images/virus.jpg"
     },
     {
         id: 3,
@@ -24,7 +24,7 @@ const products = [
         description: "RawAPI Is The Strongest API In The Comm",
         price: 29.99,
         icon: "fas fa-file-alt",
-        image: "http://51.89.251.240/images/rawapi.png"
+        image: "https://gunshub.online/images/rawapi.jpg"
     },
     {
         id: 4,
@@ -32,7 +32,7 @@ const products = [
         description: "PremRawsAPI With The Strongest Power And Best Bypasses With All L7s, TCPs And UDP Bypasses",
         price: 39.99,
         icon: "fas fa-images",
-        image: "http://51.89.251.240/images/premraws.png"
+        image: "https://gunshub.online/images/premraws.jpg"
     },
     {
         id: 5,
@@ -40,7 +40,7 @@ const products = [
         description: "You Want To Make Money Check The Products Here To Help You Earn",
         price: 59.99,
         icon: "fas fa-music",
-        image: "http://51.89.251.240/images/business.png"
+        image: "https://gunshub.online/images/business.jpg"
     },
     {
         id: 6,
@@ -48,7 +48,7 @@ const products = [
         description: "OVH Plans Here So You Can Be Protected From DDoS Attacks And Kept Anonymous.",
         price: 79.99,
         icon: "fas fa-cube",
-        image: "http://51.89.251.240/images/ovh.png"
+        image: "https://gunshub.online/images/ovh.jpg"
     }
 ];
 

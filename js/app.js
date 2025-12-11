@@ -1,5 +1,5 @@
 // Image configuration - VPS hosted image
-const PRODUCT_IMAGE_URL = 'http://51.89.251.240/images/image2.png';
+const PRODUCT_IMAGE_URL = 'https://gunshub.online/images/image2.jpg';
 
 // Load featured products on homepage
 document.addEventListener('DOMContentLoaded', () => {
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 description: "Virus C2 Powered By RawAPI",
                 price: 99.99,
                 icon: "fas fa-graduation-cap",
-                image: "http://51.89.251.240/images/Virus.png"
+                image: "https://gunshub.online/images/virus.jpg"
             },
             {
                 id: 3,
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 description: "RawAPI Is The Strongest API In The Comm",
                 price: 29.99,
                 icon: "fas fa-file-alt",
-                image: "http://51.89.251.240/images/rawapi.png"
+                image: "https://gunshub.online/images/rawapi.jpg"
             },
             {
                 id: 4,
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 description: "PremRawsAPI With The Strongest Power And Best Bypasses With All L7s, TCPs And UDP Bypasses",
                 price: 39.99,
                 icon: "fas fa-images",
-                image: "http://51.89.251.240/images/premraws.png"
+                image: "https://gunshub.online/images/premraws.jpg"
             }
         ];
         
@@ -135,9 +135,9 @@ function addToCart(productId) {
         products = [
             { id: 1, title: "GunsHub Crasher", description: "GunsHub will crash all games by one press of a button", price: 49.99, icon: "fas fa-laptop-code" },
             { id: 2, title: "Virus C2", description: "Virus C2 Powered By RawAPI", price: 99.99, icon: "fas fa-graduation-cap", image: "http://51.89.251.240/images/Virus.png" },
-            { id: 3, title: "RawAPI", description: "RawAPI Is The Strongest API In The Comm", price: 29.99, icon: "fas fa-file-alt", image: "http://51.89.251.240/images/rawapi.png" },
-            { id: 4, title: "PremRawsAPI", description: "PremRawsAPI With The Strongest Power And Best Bypasses With All L7s, TCPs And UDP Bypasses", price: 39.99, icon: "fas fa-images", image: "http://51.89.251.240/images/premraws.png" },
-            { id: 5, title: "Start Your Own Online Business", description: "You Want To Make Money Check The Products Here To Help You Earn", price: 59.99, icon: "fas fa-music", image: "http://51.89.251.240/images/business.png" },
+            { id: 3, title: "RawAPI", description: "RawAPI Is The Strongest API In The Comm", price: 29.99, icon: "fas fa-file-alt", image: "https://gunshub.online/images/rawapi.jpg" },
+            { id: 4, title: "PremRawsAPI", description: "PremRawsAPI With The Strongest Power And Best Bypasses With All L7s, TCPs And UDP Bypasses", price: 39.99, icon: "fas fa-images", image: "https://gunshub.online/images/premraws.jpg" },
+            { id: 5, title: "Start Your Own Online Business", description: "You Want To Make Money Check The Products Here To Help You Earn", price: 59.99, icon: "fas fa-music", image: "https://gunshub.online/images/business.jpg" },
             { id: 6, title: "3D Model Collection", description: "Premium 3D models ready for use.", price: 79.99, icon: "fas fa-cube" },
             { id: 7, title: "E-book Collection", description: "Library of 200+ e-books.", price: 19.99, icon: "fas fa-book" },
             { id: 8, title: "Premium Font Pack", description: "Collection of 500+ premium fonts.", price: 34.99, icon: "fas fa-font" }
