@@ -74,9 +74,8 @@ function displayFeaturedProducts(products) {
     featuredProductsGrid.innerHTML = products.map(product => `
         <div class="product-card" data-id="${product.id}">
             <div class="product-image">
-                <img src="${product.image || PRODUCT_IMAGE_URL}" alt="${product.title}" class="product-image-img" crossorigin="anonymous" 
-                     onload="console.log('Image loaded successfully:', this.src);" 
-                     onerror="console.error('Failed to load product image from:', this.src); this.style.display='none'; const parent = this.parentElement; if (!parent.querySelector('i')) { const fallback = document.createElement('i'); fallback.className = '${product.icon || 'fas fa-box'}'; parent.appendChild(fallback); }">
+                <img src="${product.image || PRODUCT_IMAGE_URL}" alt="${product.title}" class="product-image-img"
+                     onerror="this.style.display='none'; const parent = this.parentElement; if (!parent.querySelector('i')) { const fallback = document.createElement('i'); fallback.className = '${product.icon || 'fas fa-box'}'; parent.appendChild(fallback); }">
             </div>
             <div class="product-info">
                 <h3 class="product-title">${product.title}</h3>
@@ -134,7 +133,7 @@ function addToCart(productId) {
         // Load default products
         products = [
             { id: 1, title: "GunsHub Crasher", description: "GunsHub will crash all games by one press of a button", price: 49.99, icon: "fas fa-laptop-code" },
-            { id: 2, title: "Virus C2", description: "Virus C2 Powered By RawAPI", price: 99.99, icon: "fas fa-graduation-cap", image: "http://51.89.251.240/images/Virus.png" },
+            { id: 2, title: "Virus C2", description: "Virus C2 Powered By RawAPI", price: 99.99, icon: "fas fa-graduation-cap", image: "images/virus.jpg" },
             { id: 3, title: "RawAPI", description: "RawAPI Is The Strongest API In The Comm", price: 29.99, icon: "fas fa-file-alt", image: "images/rawapi.jpg" },
             { id: 4, title: "PremRawsAPI", description: "PremRawsAPI With The Strongest Power And Best Bypasses With All L7s, TCPs And UDP Bypasses", price: 39.99, icon: "fas fa-images", image: "images/premraws.jpg" },
             { id: 5, title: "Start Your Own Online Business", description: "You Want To Make Money Check The Products Here To Help You Earn", price: 59.99, icon: "fas fa-music", image: "images/business.jpg" },
