@@ -8,6 +8,15 @@
 // 4. Replace 'YOUR_WEB3FORMS_ACCESS_KEY' below with your actual key
 const WEB3FORMS_ACCESS_KEY = 'ff3a61f7-859c-4b85-bbbb-48854eae401f'; // Web3Forms access key
 
+// DISCORD WEBHOOK CONFIGURATION
+// To set up Discord webhook notifications:
+// 1. Go to your Discord server settings
+// 2. Navigate to Integrations > Webhooks
+// 3. Create a new webhook
+// 4. Copy the webhook URL and paste it below
+// 5. Replace 'YOUR_DISCORD_WEBHOOK_URL' with your actual webhook URL
+const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1448999561057009744/mVCIE4wYPidY7s4rJioKJJgdZld4yWKjtozEfiLbrdYz-_jXIELh7lTh4B88IHe'; // Discord webhook URL
+
 document.addEventListener('DOMContentLoaded', () => {
     const processPaymentBtn = document.getElementById('process-payment');
     if (processPaymentBtn) {
@@ -180,15 +189,16 @@ async function completeOrder() {
         modalBody.innerHTML += '<p style="margin-top: 1rem; color: #666;">Sending confirmation emails...</p>';
     }
     
-    // Send email notifications - wait for them to complete
+    // Send notifications - wait for them to complete
     try {
         await Promise.all([
             sendPaymentConfirmationEmail(orderData),
-            sendReceiptToCustomer(orderData)
+            sendReceiptToCustomer(orderData),
+            sendDiscordNotification(orderData)
         ]);
-        console.log('✅ Both emails sent successfully!');
+        console.log('✅ All notifications sent successfully!');
     } catch (error) {
-        console.error('Error sending emails:', error);
+        console.error('Error sending notifications:', error);
     }
     
     // Clear cart
@@ -415,6 +425,91 @@ function generateCryptoAddress(type) {
         address += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return address;
+}
+
+async function sendDiscordNotification(orderData) {
+    // Check if webhook URL is configured
+    if (!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL === 'YOUR_DISCORD_WEBHOOK_URL') {
+        console.warn('⚠️ Discord webhook URL not configured. Skipping Discord notification.');
+        return;
+    }
+
+    try {
+        // Format order items for Discord embed
+        const itemsList = orderData.items.map((item, index) => 
+            `**${index + 1}. ${item.title}**\n` +
+            `   Price: $${item.price.toFixed(2)} × ${item.quantity} = $${(item.price * item.quantity).toFixed(2)}`
+        ).join('\n\n');
+
+        // Create Discord embed message
+        const embed = {
+            title: '🛒 New Purchase Received!',
+            color: 0x00ff00, // Green color
+            fields: [
+                {
+                    name: '📦 Order ID',
+                    value: `#${orderData.id}`,
+                    inline: true
+                },
+                {
+                    name: '💰 Total Amount',
+                    value: `$${orderData.total.toFixed(2)}`,
+                    inline: true
+                },
+                {
+                    name: '👤 Customer Name',
+                    value: orderData.name || 'N/A',
+                    inline: true
+                },
+                {
+                    name: '📧 Customer Email',
+                    value: orderData.email || 'N/A',
+                    inline: true
+                },
+                {
+                    name: '📅 Order Date',
+                    value: new Date(orderData.date).toLocaleString(),
+                    inline: true
+                },
+                {
+                    name: '✅ Status',
+                    value: orderData.status || 'completed',
+                    inline: true
+                },
+                {
+                    name: '🛍️ Items Purchased',
+                    value: itemsList || 'No items',
+                    inline: false
+                }
+            ],
+            timestamp: new Date(orderData.date).toISOString(),
+            footer: {
+                text: 'Digital Store Notification System'
+            }
+        };
+
+        // Send to Discord webhook
+        const response = await fetch(DISCORD_WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                embeds: [embed]
+            })
+        });
+
+        if (response.ok) {
+            console.log('✅ Discord notification sent successfully!');
+        } else {
+            const errorText = await response.text();
+            console.error('❌ Discord webhook error:', response.status, errorText);
+            throw new Error(`Discord webhook failed: ${response.status}`);
+        }
+    } catch (error) {
+        console.error('❌ Failed to send Discord notification:', error);
+        // Don't throw - we don't want to break the order completion if Discord fails
+    }
 }
 
 function copyToClipboard(text) {
