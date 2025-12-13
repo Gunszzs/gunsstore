@@ -428,18 +428,33 @@ function generateCryptoAddress(type) {
 }
 
 async function sendDiscordNotification(orderData) {
+    console.log('🔔 Attempting to send Discord notification...', orderData);
+    
     // Check if webhook URL is configured
     if (!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL === 'YOUR_DISCORD_WEBHOOK_URL') {
         console.warn('⚠️ Discord webhook URL not configured. Skipping Discord notification.');
-        return;
+        return false;
     }
 
     try {
-        // Format order items for Discord embed
-        const itemsList = orderData.items.map((item, index) => 
-            `**${index + 1}. ${item.title}**\n` +
-            `   Price: $${item.price.toFixed(2)} × ${item.quantity} = $${(item.price * item.quantity).toFixed(2)}`
-        ).join('\n\n');
+        console.log('📤 Sending to Discord webhook:', DISCORD_WEBHOOK_URL);
+        // Format order items for Discord embed (Discord has 1024 char limit per field)
+        let itemsList = '';
+        if (orderData.items && orderData.items.length > 0) {
+            itemsList = orderData.items.map((item, index) => {
+                const itemTitle = item.title || item.name || 'Unknown Item';
+                const itemPrice = item.price || 0;
+                const itemQuantity = item.quantity || 1;
+                return `${index + 1}. **${itemTitle}** - $${itemPrice.toFixed(2)} × ${itemQuantity} = $${(itemPrice * itemQuantity).toFixed(2)}`;
+            }).join('\n');
+            
+            // Truncate if too long (Discord limit is 1024 chars per field)
+            if (itemsList.length > 1000) {
+                itemsList = itemsList.substring(0, 997) + '...';
+            }
+        } else {
+            itemsList = 'No items found';
+        }
 
         // Create Discord embed message
         const embed = {
@@ -458,12 +473,12 @@ async function sendDiscordNotification(orderData) {
                 },
                 {
                     name: '👤 Customer Name',
-                    value: orderData.name || 'N/A',
+                    value: (orderData.name || 'N/A').substring(0, 1024),
                     inline: true
                 },
                 {
                     name: '📧 Customer Email',
-                    value: orderData.email || 'N/A',
+                    value: (orderData.email || 'N/A').substring(0, 1024),
                     inline: true
                 },
                 {
@@ -501,14 +516,44 @@ async function sendDiscordNotification(orderData) {
 
         if (response.ok) {
             console.log('✅ Discord notification sent successfully!');
+            return true;
         } else {
             const errorText = await response.text();
             console.error('❌ Discord webhook error:', response.status, errorText);
-            throw new Error(`Discord webhook failed: ${response.status}`);
+            
+            // Try sending a simple message as fallback
+            try {
+                const simpleMessage = {
+                    content: `🛒 **New Purchase!**\nOrder #${orderData.id}\nCustomer: ${orderData.name || 'N/A'}\nEmail: ${orderData.email || 'N/A'}\nTotal: $${orderData.total.toFixed(2)}`
+                };
+                
+                const fallbackResponse = await fetch(DISCORD_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(simpleMessage)
+                });
+                
+                if (fallbackResponse.ok) {
+                    console.log('✅ Discord notification sent as simple message!');
+                    return true;
+                }
+            } catch (fallbackError) {
+                console.error('❌ Fallback message also failed:', fallbackError);
+            }
+            
+            throw new Error(`Discord webhook failed: ${response.status} - ${errorText}`);
         }
     } catch (error) {
         console.error('❌ Failed to send Discord notification:', error);
+        console.error('Error details:', {
+            message: error.message,
+            stack: error.stack,
+            orderData: orderData
+        });
         // Don't throw - we don't want to break the order completion if Discord fails
+        return false;
     }
 }
 
@@ -541,8 +586,33 @@ function copyToClipboard(text) {
     });
 }
 
+// Test Discord webhook function (can be called from browser console)
+async function testDiscordWebhook() {
+    const testOrderData = {
+        id: Date.now(),
+        email: 'test@example.com',
+        name: 'Test Customer',
+        items: [
+            { title: 'Test Product', price: 10.00, quantity: 1 }
+        ],
+        total: 10.00,
+        date: new Date().toISOString(),
+        status: 'test'
+    };
+    
+    console.log('🧪 Testing Discord webhook...');
+    const result = await sendDiscordNotification(testOrderData);
+    if (result) {
+        console.log('✅ Test notification sent! Check your Discord channel.');
+    } else {
+        console.error('❌ Test notification failed. Check console for errors.');
+    }
+    return result;
+}
+
 // Make functions available globally
 window.simulatePaymentSuccess = simulatePaymentSuccess;
 window.completeOrder = completeOrder;
 window.copyToClipboard = copyToClipboard;
+window.testDiscordWebhook = testDiscordWebhook;
 
